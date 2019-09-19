@@ -4,6 +4,7 @@ import server from 'http'
 import mustacheExpress from 'mustache-express'
 import bodyParser from 'body-parser'
 import bcrypt from 'bcryptjs'
+import cookieParser from 'cookie-parser'
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.set('view engine', 'mst')
 app.set('views', __dirname + '/views')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 let easyInstance = new easy(app)
 
@@ -64,10 +66,6 @@ easyInstance.getAuthorizationCode = async function(clientId, code) {
 	return authorizationCodes.find(x => x.code === code && x.clientId === clientId && x.code !== easy.REVOKED_TOKEN)
 }
 
-easyInstance.renderAuthorizationView = async function(req, res, next) {
-	res.render('main', req.query)
-}
-
 easyInstance.getDevUser = async function(devUserId) {
 	return devUsers.find(x => x.id === devUserId)
 }
@@ -98,8 +96,24 @@ easyInstance.revokeAuthorizationCode = async function(clientId, code) {
 	authorizationCode.code = easy.REVOKED_TOKEN
 }
 
-easyInstance.initViews()
+async function authenticatedMiddleware(req, res, next) {
+	return res.send('oie')
+	if (true) {
+		return res.redirect('http://localhost:3000/login')
+	}
+	next()
+}
 
+async function renderAuthorizationView(req, res, next) {
+	res.render('authorization')
+}
+
+async function renderAuthenticationView(req, res, next) {
+	res.render('login')
+}
+
+app.get('/login')
+app.get('/authorize-frontend', [authenticatedMiddleware, renderAuthorizationView])
 app.get('/register-application', registerApplicationHandler)
 
 async function registerApplicationHandler(req, res, next) {

@@ -1,0 +1,30 @@
+<html>
+	<body>
+		<form method="POST" action="/login">
+			<div>
+				<label for="scope">Username</label>
+				<input type="text" name="username" />
+			</div>
+			<div>
+				<label for="client_id">Password</label>
+				<input type="text" name="password" />
+			</div>
+			<button type="submit">Login</button>
+		</form>
+		<style>
+			form div {
+				margin: 10px;
+			}
+			label {
+				margin-right: 5px;
+			}
+		</style>
+		<script>
+			let client_id = '{{client_id}}'
+			let scope = '{{scope}}'
+			let state = '{{state}}'
+			let response_type = '{{response_type}}'
+			console.log(response_type)
+		</script>
+	</body>
+</html>

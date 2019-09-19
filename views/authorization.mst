@@ -1,0 +1,42 @@
+<html>
+	<body>
+		<form method="POST" action="/authorize">
+			<div>
+				<label for="scope">Scope</label>
+				<input type="text" value="{{ scope }}" name="scope" />
+			</div>
+			<div>
+				<label for="client_id">Client id</label>
+				<input type="text" value="{{ client_id }}" name="client_id" />
+			</div>
+			<div>
+				<label for="scope">State</label>
+				<input type="text" value="{{ state }}" name="state" />
+			</div>
+			<div>
+				<label for="scope">Response type</label>
+				<input type="text" value="{{ response_type }}" name="response_type" />
+			</div>
+			<div>
+				<label for="scope">Redirect uri</label>
+				<input type="text" value="{{ redirect_uri }}" name="redirect_uri" />
+			</div>
+			<button type="submit">Accept</button>
+		</form>
+		<style>
+			form div {
+				margin: 10px;
+			}
+			label {
+				margin-right: 5px;
+			}
+		</style>
+		<script>
+			let client_id = '{{client_id}}'
+			let scope = '{{scope}}'
+			let state = '{{state}}'
+			let response_type = '{{response_type}}'
+			console.log(response_type)
+		</script>
+	</body>
+</html>
